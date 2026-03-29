@@ -1,8 +1,6 @@
-module TwoLevelLocalPred #(parameter PC_BITS=6, 
-			                     parameter HIST_BITS=4) 
+module TwoLevelLocalPred #(parameter PC_BITS=6, parameter HIST_BITS=4) 
 (
     input clk, reset,
-
     // fetch stage stuff
     input [31:0] fetch_pc,       
     output reg prediction,
@@ -17,8 +15,8 @@ module TwoLevelLocalPred #(parameter PC_BITS=6,
 
 parameter STRONGLY_NOT_TAKEN=2'b00, WEAKLY_NOT_TAKEN=2'b01, WEAKLY_TAKEN=2'b10, STRONGLY_TAKEN=2'b11; // states for 2 bit counter
 
-reg [HIST_BITS-1:0] lht[0:(1<<PC_BITS)-1]; // LHT
-reg [1:0] pht[0:(1<<HIST_BITS)-1]; // PHT
+reg [HIST_BITS-1:0] lht[0:(1<<PC_BITS)-1]; // LHT :- Local history table , indexed by PC, gives the history pattern for that PC
+reg [1:0] pht[0:(1<<HIST_BITS)-1]; // PHT :- Pattern history table, indexed by the history pattern, gives the 2 bit counter for that pattern
 
 wire [PC_BITS-1:0] fetch_idx=fetch_pc[PC_BITS+1:2]; // useful fetch
 
