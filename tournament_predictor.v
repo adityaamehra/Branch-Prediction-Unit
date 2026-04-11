@@ -23,7 +23,7 @@ module TournamentPredictor #(
 
     wire local_pred_out, global_pred_out, use_global_pred;
 
-    TwoLevelLocalPred #(.PC_BITS(PC_BITS),.HIST_BITS(LOCAL_HIST_BITS)) local_pred(.clk(clk),.reset(reset),.fetch_pc(fetch_pc),.prediction(local_pred_out),.update_en(update_en),.update_pc(update_pc),.update_history_in(update_local_hist),.branch_taken(branch_taken));
+    TwoLevelLocalPred #(.PC_BITS(PC_BITS),.HIST_BITS(LOCAL_HIST_BITS)) local_pred(.clk(clk),.reset(reset),.fetch_pc(fetch_pc),.predict_history_out(fetch_local_hist),.prediction(local_pred_out),.update_en(update_en),.update_pc(update_pc),.update_history_in(update_local_hist),.branch_taken(branch_taken));
     GlobalPred #(.PHT_INDEX_BITS(GLOBAL_HIST_BITS), .GHR_BITS(GLOBAL_HIST_BITS)) global_pred(.clk(clk),.reset(reset),.fetch_pc(fetch_pc),.prediction(global_pred_out),.predict_history_out(fetch_global_hist),.update_en(update_en),.update_pc(update_pc),.update_history_in(update_global_hist),.branch_taken(branch_taken));
     ChoicePred #(.GHR_BITS(GLOBAL_HIST_BITS)) choice_pred(.clk(clk),.reset(reset),.fetch_ghr(fetch_global_hist),.use_global_pred(use_global_pred),.update_en(update_en),.update_ghr(update_global_hist),.local_prediction(local_pred_out),.global_prediction(global_pred_out),.branch_taken(branch_taken));
 
